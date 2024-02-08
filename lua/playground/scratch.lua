@@ -1,21 +1,12 @@
--- local options = require("playground.config").options
-local joinpath = require("playground.utils").joinpath
+local utils = require("playground.utils")
 
 local M = {}
-local config_file_name = ".playground.nvim.json"
 
 --- Open a playground. If one does not exist based on given options, create one
 --- @param opts table
 function M.open_playground(opts)
     if opts.path then
-        local playground_config_file = io.open(joinpath(opts.path, config_file_name), "r")
-        if not playground_config_file then
-            error("Required config file could not be opened, to open given playground " .. opts.path)
-        end
-
-        --- @type table
-        ---@diagnostic disable-next-line: assign-type-mismatch
-        local playground_config = vim.fn.json_decode(playground_config_file:read("*a"))
+        local playground_config = utils.get_existing_playground_config(opts.path)
 
         local buf_n
         -- Make sure buffer name isn't already open, and if it is, just use that buffer
@@ -58,7 +49,7 @@ function M.delete_old_playgrounds(force)
 
         -- Only delete old playgrounds
         if (options.hours_to_live ~= -1 and creation_time < time) or force then
-            vim.fn.delete(joinpath(options.root_dir, file), "rf")
+            vim.fn.delete(utils.joinpath(options.root_dir, file), "rf")
         end
     end
 end
@@ -72,25 +63,10 @@ function M.select_playground()
 
     for _, file in ipairs(files) do
         local creation_time, filename = unpack(vim.split(file, "_"))
-        table.insert(file_options, { filename, creation_time, joinpath(options.root_dir, file) })
+        table.insert(file_options, { filename, creation_time, utils.joinpath(options.root_dir, file) })
     end
 
-    -- TODO abstract into `view.lua`
-    vim.ui.select(
-        file_options,
-        {
-            prompt = "Select playground to open: ",
-            format_item = function(item)
-                return item[1]
-            end
-        },
-        function(choice)
-            if not choice then
-                return
-            end
-            M.open_playground({ path = choice[3], filename = choice[1] })
-        end
-    )
+    require("playground.view").selector({ file_options = file_options, title = "Select Playground" })
 end
 
 --- Create the path required for files
@@ -103,7 +79,7 @@ function M._create_path(name, time)
     -- TODO replace all `_` with `-` in filename
     local filename = name
     local folder_name = time .. "_" .. filename
-    local file_path = joinpath(options.root_dir, folder_name)
+    local file_path = utils.joinpath(options.root_dir, folder_name)
 
     if vim.fn.mkdir(file_path, "p") == 0 then
         error("Could not create temp folder")
@@ -125,12 +101,12 @@ function M._create_workspace(ft, name)
     local time = os.date("%Y-%m-%d-%H:%M:%S")
     local filename = tostring(name or time)
     local folder_path = M._create_path(filename, time)
-    local file_path = joinpath(folder_path, filename .. "." .. ft)
+    local file_path = utils.joinpath(folder_path, filename .. "." .. ft)
 
     local file_options = options.ft[ft] or { lines = {} }
     file_options.file_path = file_path
     -- create required workspace setup
-    local settings_file = io.open(joinpath(folder_path, config_file_name), "w")
+    local settings_file = io.open(utils.joinpath(folder_path, config_file_name), "w")
     if not settings_file then
         error("Could not construct workspace settings file")
     end

@@ -27,18 +27,27 @@ function M.create_playground(opts)
     opts = opts or {}
     -- TODO replace with `view.lua`
 
-    if not opts.ft then
+    if not opts.ft or opts.ft == "" then
         vim.ui.input({ prompt = "Enter file type extension: " }, function(input)
-            opts.ft = vim.trim(input)
+            if not input then
+                vim.notify("Canceled playground creation")
+                opts.ft = nil
+            else
+                opts.ft = vim.trim(input)
+            end
         end)
     end
-
+    if not opts.ft then
+        return
+    end
     scratch.open_playground(opts)
 end
 
 function M.select_playground()
     scratch.select_playground()
 end
+
+-- TODO function for searching playground text (fzf). Will only work if you have telescope enabled
 
 --- Cleanup the cache directory, by deleting old files.
 --- Old is defined by in `setup({ cleanup_age = boolean })`.

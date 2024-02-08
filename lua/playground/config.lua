@@ -14,7 +14,7 @@ M.defaults = {
     -- hours_to_live can be:
     -- * -1 : never delete files (unless `:PlaygroundDeleteAll` is ran)
     -- * n  : delete all playgrounds on `VimLeave`, after `n` hours since playground creation
-    hours_to_live = 0,
+    hours_to_live = -1,
     -- Add any file type extension that you want custom settings for
     ft = {
         txt = {
@@ -26,6 +26,7 @@ M.defaults = {
         --     lines = { "import numpy", "print('hi')" }
         -- }
     },
+    telescope = true, -- weather or not to use telescope (if available)
 }
 
 --- @type PlaygroundOptions
