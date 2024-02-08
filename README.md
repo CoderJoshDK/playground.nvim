@@ -33,8 +33,6 @@ Plugin works out of the box. No configuration is required.
 
 ## Commands
 
-See `:h playground-commands`
-
 ~~If possible, `telescope` is used, unless overridden by config. `telescope` is an optional dependency.~~ (coming soon)
 
 Basic commands:

@@ -10,7 +10,6 @@ local CMDS = {
             nargs = "?",
         },
         command = function(c)
-            print(vim.inspect(c))
             local args = vim.split(c.args, " ")
             local ft = args[1]
             local name = args[2]
