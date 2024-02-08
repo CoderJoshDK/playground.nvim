@@ -1,4 +1,4 @@
-*playground.nvim.txt*     For Neovim >= 0.9.0    Last change: 2024 February 07
+*playground.nvim.txt*     For Neovim >= 0.9.0    Last change: 2024 February 08
 
 ==============================================================================
 Table of Contents                          *playground.nvim-table-of-contents*
@@ -49,8 +49,6 @@ configuration is required.
 
 
 COMMANDS                            *playground.nvim-playground.nvim-commands*
-
-See |playground-commands|
 
 ~If possible, telescope is used, unless overridden by config. telescope is an
 optional dependency.~ (coming soon)
