@@ -76,8 +76,7 @@ end
 function M._create_path(name, time)
     local options = require("playground.config").options
 
-    -- TODO replace all `_` with `-` in filename
-    local filename = name
+    local filename = utils.clean_filename(name)
     local folder_name = time .. "_" .. filename
     local file_path = utils.joinpath(options.root_dir, folder_name)
 

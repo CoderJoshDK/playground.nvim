@@ -27,4 +27,26 @@ function M.get_existing_playground_config(playground_root)
     return playground_config
 end
 
+--- Replace `_` with `-`
+--- @param path string
+--- @return string
+function M.clean_filename(path)
+    return (path:gsub("_", "-"))
+end
+
+--- Check if path is absolute
+--- @param path string
+--- @return boolean
+function M.is_absolute_path(path)
+    if path:match("^%a:/") then
+        return true
+    end
+
+    if path:sub(1, 1) == "/" then
+        return true
+    end
+
+    return false
+end
+
 return M
