@@ -31,8 +31,8 @@ function M.open_playground(opts)
 
 
     local buf_n = M._create_workspace(opts.ft, opts.name)
+    vim.api.nvim_buf_call(buf_n, vim.cmd.edit)
     vim.api.nvim_set_current_buf(buf_n)
-    vim.cmd.filetype("detect")
 end
 
 --- Delete all playgrounds that are older than `hours_to_live` unless `-1`
@@ -121,12 +121,18 @@ function M._create_workspace(ft, name)
     settings_file:write(vim.fn.json_encode(file_options))
     settings_file:close()
 
+    local new_file = io.open(file_path, "w")
+    if not new_file then
+        error("Could not create new file at " .. file_path)
+    end
+    new_file:write(table.concat(file_options.lines, "\n"))
+    new_file:close()
+
     local buf_n = vim.api.nvim_create_buf(false, false)
     if buf_n == 0 then
-        error("Error creating new buffer (`vim.api.nvim_create_buf(true, false)`)")
+        error("Error creating new buffer (`vim.api.nvim_create_buf(false, false)`)")
     end
 
-    vim.api.nvim_buf_set_lines(buf_n, 0, 0, false, file_options.lines)
     vim.api.nvim_buf_set_name(buf_n, file_path)
     return buf_n
 end
