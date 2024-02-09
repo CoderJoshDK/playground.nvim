@@ -106,7 +106,7 @@ function M._create_workspace(ft, name)
     local file_options = options.ft[ft] or { lines = {} }
     file_options.file_path = file_path
     -- create required workspace setup
-    local settings_file = io.open(utils.joinpath(folder_path, config_file_name), "w")
+    local settings_file = io.open(utils.joinpath(folder_path, utils.config_file_name), "w")
     if not settings_file then
         error("Could not construct workspace settings file")
     end
