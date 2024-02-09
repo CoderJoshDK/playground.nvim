@@ -71,4 +71,17 @@ function M.selector(opts)
     )
 end
 
+--- Do a live grep search on files inside the playgrounds
+--- @param root_dir string
+function M.live_grep(root_dir)
+    local has_telescope, telescope_builtin = pcall(require, "telescope.builtin")
+    if not has_telescope then
+        vim.notify("Playground search requires telescope to work", "ERROR")
+        return
+    end
+    telescope_builtin.live_grep(
+        { cwd = root_dir }
+    )
+end
+
 return M

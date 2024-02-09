@@ -69,6 +69,11 @@ function M.select_playground()
     require("playground.view").selector({ file_options = file_options, title = "Select Playground" })
 end
 
+function M.search_playgrounds()
+    local options = require("playground.config").options
+    require("playground.view").live_grep(options.root_dir)
+end
+
 --- Create the path required for files
 --- @param name string custom name of scratch file
 --- @param time string|osdate string time of path creation

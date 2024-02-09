@@ -17,6 +17,15 @@ local CMDS = {
         end,
     },
     {
+        name = "PlaygroundSearch",
+        opts = {
+            desc = "playground: search",
+        },
+        command = function()
+            playground.search_playgrounds()
+        end,
+    },
+    {
         name = "PlaygroundSelect",
         opts = {
             desc = "playground: select",

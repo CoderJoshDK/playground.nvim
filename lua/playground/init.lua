@@ -47,7 +47,9 @@ function M.select_playground()
     scratch.select_playground()
 end
 
--- TODO function for searching playground text (fzf). Will only work if you have telescope enabled
+function M.search_playgrounds()
+    scratch.search_playgrounds()
+end
 
 --- Cleanup the cache directory, by deleting old files.
 --- Old is defined by in `setup({ cleanup_age = boolean })`.
