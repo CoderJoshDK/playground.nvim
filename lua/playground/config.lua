@@ -1,7 +1,8 @@
 --- @class Config
 local M = {}
 
-local joinpath = require("playground.utils").joinpath
+local utils = require("playground.utils")
+local joinpath = utils.joinpath
 
 --- @class PlaygroundOptions
 M.defaults = {
@@ -34,7 +35,12 @@ M.options = {}
 
 --- @param opts? table
 function M.setup(opts)
-    M.options = vim.tbl_deep_extend("force", M.defaults, opts or {})
+    opts = opts or {}
+    opts.root_dir = vim.fs.normalize(opts.root_dir or M.defaults.root_dir)
+    if not utils.is_absolute_path(opts.root_dir) then
+        error("Config `root_dir` is not an absolute path. MUST be absolute not " .. opts.root_dir)
+    end
+    M.options = vim.tbl_deep_extend("force", M.defaults, opts)
     M._init_cache()
 end
 
