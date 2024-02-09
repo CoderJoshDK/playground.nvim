@@ -81,18 +81,17 @@ Playground.nvim comes with the following defaults
 <details>
   <summary>More info on `hours_to_live`</summary>
 
-  `hours_to_live` defines the minimum amount of hours for the created playground to exist for.
-  A created playground, will keep track of its creation time. When the user exits vim (`VimLeave`,) an auto command is ran.
-  The function ends up being the same as `:PlaygroundDelete`.
+`hours_to_live` defines the minimum amount of hours for the created playground to exist for.
+A created playground, will keep track of its creation time. When the user exits vim (`VimLeave`,) an auto command is ran.
+The function ends up being the same as `:PlaygroundDelete`.
   
-  Some examples:
+Some examples:
 
-  If set to `0`; the playgrounds will be deleted as soon as you leave neovim.
+* If set to `0`; the playgrounds will be deleted as soon as you leave neovim.
+* If set to `1`; if you create a playground at 12:20, and leave at 12:40, that playground will still exist.
+    If you then come back at 15:30, the playground you created will still exist. Only until you leave again, will it now be deleted.
+* If set to `-1`; your created playgrounds will not be automatically deleted.
 
-  If set to `1`; if you create a playground at 12:20, and leave at 12:40, that playground will still exist.
-  If you then come back at 15:30, the playground you created will still exist. Only until you leave again, will it now be deleted.
-
-  If set to `-1`; your created playgrounds will not be automatically deleted.
 </details>
 
 <details>
