@@ -37,13 +37,14 @@ If possible, `telescope` is used, unless overridden by config. `telescope` is an
 
 Basic commands:
 
-| Command                | Args            | Description                                                                                                                                                                                                                                                        |
-| ---------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:Playground`          | `[ft]` `[name]` | Creates a new playground of file type `[ft]` with name `[name]`. If `[ft]` is not present, the command prompts you for the file extension. For example, if you wanted a python file, enter `py`. If no `[name]` is provided, the current time is used as the name. |  
-| `:PlaygroundSelect`    | `nil`           | Opens an existing playground. Prompts user for specific playground to open.                                                                                                                                                                                        |
-| `:PlaygroundSearch`    | `nil`           | Live grep search the files inside all playgrounds. (Requires telescope)                                                                                                                                                                                            |
-| `:PlaygroundDelete`    | `nil`           | Deletes expired playgrounds. Expiration is defined by setup configuration `{hours_to_live}`. See [configuration](#configuration). `:PlaygroundDelete` is attached, as an auto command, on `VimLeave`.                                                              |
-| `:PlaygroundDeleteAll` | `nil`           | Deletes all playgrounds regardless of configs or file age.                                                                                                                                                                                                         |
+| Command | Args | Description |
+| -- | -- | -- |
+| `:Playground` | `[ft]` `[name]` | Creates a new playground of file type `[ft]` with name `[name]`. If `[ft]` is not present, the command prompts you for the file extension. For example, if you wanted a python file, enter `py`. If no `[name]` is provided, the current time is used as the name. |  
+| `:PlaygroundSelect` | `nil` | Opens an existing playground. Prompts user for specific playground to open. |
+| `:PlaygroundSearch` | `nil` | Live grep search the files inside all playgrounds. (Requires telescope) |
+| `:PlaygroundDelete` | `nil` | Deletes expired playgrounds. Expiration is defined by setup configuration `{hours_to_live}`. See [configuration](#configuration). `:PlaygroundDelete` is attached, as an auto command, on `VimLeave`. |
+| `:PlaygroundDeleteSelect` | `nil` | Select a playground to delete. |
+| `:PlaygroundDeleteAll` | `nil` | Deletes all playgrounds regardless of configs or file age. |
 
 ## Configuration
 

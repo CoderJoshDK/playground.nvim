@@ -44,6 +44,15 @@ local CMDS = {
         end,
     },
     {
+        name = "PlaygroundDeleteSelect",
+        opts = {
+            desc = "playground: select delete",
+        },
+        command = function()
+            playground.delete_select()
+        end,
+    },
+    {
         name = "PlaygroundDeleteAll",
         opts = {
             desc = "playground: delete all playgrounds",

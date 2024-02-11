@@ -54,6 +54,28 @@ function M.delete_old_playgrounds(force)
     end
 end
 
+function M.delete_select()
+    local options = require("playground.config").options
+    local files = vim.fn.readdir(options.root_dir)
+
+
+    local file_options = {}
+
+    for _, file in ipairs(files) do
+        local creation_time, filename = unpack(vim.split(file, "_"))
+        table.insert(file_options, { filename, creation_time, utils.joinpath(options.root_dir, file) })
+    end
+
+    require("playground.view").selector({ file_options = file_options, title = "Select Playground to Delete" },
+        function(selection)
+            local value = selection.value
+            vim.fn.delete(value[3], "rf")
+        end,
+        function(choice)
+            vim.fn.delete(choice[3], "rf")
+        end)
+end
+
 function M.select_playground()
     local options = require("playground.config").options
     local files = vim.fn.readdir(options.root_dir)
@@ -66,7 +88,14 @@ function M.select_playground()
         table.insert(file_options, { filename, creation_time, utils.joinpath(options.root_dir, file) })
     end
 
-    require("playground.view").selector({ file_options = file_options, title = "Select Playground" })
+    require("playground.view").selector({ file_options = file_options, title = "Select Playground" },
+        function(selection)
+            local value = selection.value
+            M.open_playground({ path = value[3] })
+        end,
+        function(choice)
+            M.open_playground({ path = choice[3] })
+        end)
 end
 
 function M.search_playgrounds()

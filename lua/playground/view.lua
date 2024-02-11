@@ -1,7 +1,6 @@
 local M = {}
 
 local utils = require("playground.utils")
-local open_playground = require("playground.scratch").open_playground
 
 
 --- @class SelectorOptions
@@ -11,7 +10,9 @@ local open_playground = require("playground.scratch").open_playground
 
 --- Either use builtin selector or telescope if available
 --- @param opts SelectorOptions
-function M.selector(opts)
+--- @param tel_func function
+--- @param default_func function
+function M.selector(opts, tel_func, default_func)
     local config = require("playground.config").options
     opts.title = opts.title or "Select"
     if config.telescope and package.loaded["telescope"] then
@@ -42,8 +43,9 @@ function M.selector(opts)
                     actions.close(prompt_bufnr)
                     local selection = action_state.get_selected_entry()
                     if selection then
-                        local value = selection.value
-                        open_playground({ path = value[3] })
+                        tel_func(selection)
+                        -- local value = selection.value
+                        -- open_playground({ path = value[3] })
                         return
                     end
                     -- TODO handle if name is a new file name: action_state.get_current_line()
@@ -66,7 +68,7 @@ function M.selector(opts)
             if not choice then
                 return
             end
-            open_playground({ path = choice[3], filename = choice[1] })
+            default_func(choice)
         end
     )
 end

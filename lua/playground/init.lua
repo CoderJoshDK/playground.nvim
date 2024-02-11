@@ -43,12 +43,19 @@ function M.create_playground(opts)
     scratch.open_playground(opts)
 end
 
+--- Select an existing playground to open
 function M.select_playground()
     scratch.select_playground()
 end
 
+--- Live grep through playground files. Requires telescope
 function M.search_playgrounds()
     scratch.search_playgrounds()
+end
+
+--- Select a specific playground to delete
+function M.delete_select()
+    scratch.delete_select()
 end
 
 --- Cleanup the cache directory, by deleting old files.
