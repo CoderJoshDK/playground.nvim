@@ -22,7 +22,7 @@ Plugin works out of the box. No configuration is required.
 ```lua
 {  
   'CoderJoshDK/playground.nvim',
-  cmds = {
+  cmd = {
     "Playground",
     "PlaygroundSelect",
     "PlaygroundDelete",
